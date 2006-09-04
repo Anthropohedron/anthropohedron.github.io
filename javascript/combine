@@ -1,0 +1,16 @@
+#!/bin/sh
+
+cd "`dirname \"$0\"`"
+cat findDOM.js \
+	css.js \
+	stack.js \
+	undo.js \
+	dnd.js \
+	cards.js \
+	game.js \
+	ajax.js \
+	xmlrpc.js \
+	netgame.js \
+	location.js \
+	deck.js \
+	rect.js

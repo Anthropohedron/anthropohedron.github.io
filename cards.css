@@ -1,0 +1,221 @@
+.spades,.hearts,.diamonds,.clubs {
+	position:absolute;
+	background-color: white;
+	overflow:hidden;
+}
+.notrump {
+	position:absolute;
+	background-color: transparent;
+	overflow:hidden;
+}
+.notrump .cardback {
+	background-color: gray;
+	background-image: url("images/bg.png");
+}
+.cardback div { display:none; }
+
+.notrump .cardplace {
+	background-color: transparent;
+}
+.cardplace div { display:none; }
+
+.surface {
+	border:2px solid black;
+	position:relative;
+	z-index:10;
+}
+
+.cardLayout {
+	width: 100%;
+	border: 0px none white;
+	padding: 0px 0px 0px 0px;
+	border-collapse: collapse;
+	table-layout: fixed;
+}
+table.cardLayout tr td {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	text-align: center;
+}
+.rankTLbox {
+	vertical-align: top;
+}
+.rankBRbox {
+	vertical-align: bottom;
+}
+.faceBox {
+	vertical-align: middle;
+}
+.zerobox {
+	width:0px;
+	height:0px;
+	overflow:visible;
+	position:relative;
+}
+.imgspan { position:relative; }
+/******************************************************************************/
+.tagpipTL,.tagpipBR {
+	margin: 0px auto 0px auto;
+	overflow:hidden;
+	position:relative;
+}
+/******************************************************************************/
+.spades   .rankTL img { position:relative; }
+.spades   .rankBR img { position:relative; }
+.spades   .rQ .rankBR img { position:relative; }
+.hearts   .rankTL img { position:relative; }
+.hearts   .rankBR img { position:relative; }
+.hearts   .rQ .rankBR img { position:relative; }
+.diamonds .rankTL img { position:relative; }
+.diamonds .rankBR img { position:relative; }
+.diamonds .rQ .rankBR img { position:relative; }
+.clubs    .rankTL img { position:relative; }
+.clubs    .rankBR img { position:relative; }
+.clubs    .rQ .rankBR img { position:relative; }
+
+.rankTL,.rankBR {
+	position:relative;
+	overflow:hidden;
+}
+
+/******************************************************************************/
+.spades   .face .faceimg img { position:relative; }
+.hearts   .face .faceimg img { position:relative; }
+.diamonds .face .faceimg img { position:relative; }
+.clubs    .face .faceimg img { position:relative; }
+.face {
+	margin: auto;
+	position:relative;
+	overflow:hidden;
+}
+
+.rA .face { border: 0px none white; }
+
+.pips {
+	width: 100%;
+	position: relative;
+	border: 0px none white;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	text-align: center;
+}
+.pips td {
+	text-align: center;
+	width: 33%;
+}
+.pips .topRow {
+	vertical-align: top;
+}
+.pips .bottomRow {
+	vertical-align: bottom;
+}
+.pips .centerCol {
+	vertical-align: middle;
+}
+.rA .pips td { display: none; width: 0%; }
+.rA .pips td.centerCol {
+	display: block;
+	width: 100%;
+}
+
+.faceimg { display:none; position:relative; }
+
+.rJ .pips { display:none; }
+.rQ .pips { display:none; }
+.rK .pips { display:none; }
+.rJ .faceimg { display:block; }
+.rQ .faceimg { display:block; }
+.rK .faceimg { display:block; }
+/******************************************************************************/
+.pips div {
+	position:relative;
+	margin: auto auto auto auto;
+	display:none;
+	overflow:hidden;
+}
+
+.rA .pip6 {
+	display:block;
+}
+
+.rA .pip5 { display:block; visibility:hidden; }
+.rA .pip7 { display:block; visibility:hidden; }
+
+.r2 .pip1 { display:block; visibility:hidden; }
+.r2 .pip5 { display:block; }
+.r2 .pip6 { display:block; visibility:hidden; }
+.r2 .pip7 { display:block; visibility:hidden; }
+.r2 .pip8 { display:block; }
+.r2 .pip9 { display:block; visibility:hidden; }
+
+.r3 .pip1 { display:block; visibility:hidden; }
+.r3 .pip5 { display:block; }
+.r3 .pip6 { display:block; }
+.r3 .pip8 { display:block; }
+.r3 .pip9 { display:block; visibility:hidden; }
+
+.r4 .pip1 { display:block; }
+.r4 .pip4 { display:block; }
+.r4 .pip6 { display:block; visibility:hidden; }
+.r4 .pip9 { display:block; }
+.r4 .pipC { display:block; }
+
+.r5 .pip1 { display:block; }
+.r5 .pip4 { display:block; }
+.r5 .pip6 { display:block; }
+.r5 .pip9 { display:block; }
+.r5 .pipC { display:block; }
+
+.r6 .pip1 { display:block; }
+.r6 .pip2 { display:block; }
+.r6 .pip4 { display:block; }
+.r6 .pip6 { display:block; visibility:hidden; }
+.r6 .pip9 { display:block; }
+.r6 .pipA { display:block; }
+.r6 .pipC { display:block; }
+
+.r7 .pip1 { display:block; }
+.r7 .pip2 { display:block; }
+.r7 .pip4 { display:block; }
+.r7 .pip5 { display:block; }
+.r7 .pip6 { display:block; visibility:hidden; }
+.r7 .pip8 { display:block; visibility:hidden; }
+.r7 .pip9 { display:block; }
+.r7 .pipA { display:block; }
+.r7 .pipC { display:block; }
+
+.r8 .pip1 { display:block; }
+.r8 .pip2 { display:block; }
+.r8 .pip4 { display:block; }
+.r8 .pip5 { display:block; }
+.r8 .pip6 { display:block; visibility:hidden; }
+.r8 .pip8 { display:block; }
+.r8 .pip9 { display:block; }
+.r8 .pipA { display:block; }
+.r8 .pipC { display:block; }
+
+.r9 .pip1 { display:block; }
+.r9 .pip2 { display:block; }
+.r9 .pip3 { display:block; }
+.r9 .pip4 { display:block; }
+.r9 .pip6 { display:block; }
+.r9 .pip9 { display:block; }
+.r9 .pipA { display:block; }
+.r9 .pipB { display:block; }
+.r9 .pipC { display:block; }
+.r9 .pips div.sep { display:block; }
+
+.r10 .pip1 { display:block; }
+.r10 .pip2 { display:block; }
+.r10 .pip3 { display:block; }
+.r10 .pip4 { display:block; }
+.r10 .pip5 { display:block; }
+.r10 .pip6 { display:block; visibility:hidden; }
+.r10 .pip7 { display:block; visibility:hidden; }
+.r10 .pip8 { display:block; }
+.r10 .pip9 { display:block; }
+.r10 .pipA { display:block; }
+.r10 .pipB { display:block; }
+.r10 .pipC { display:block; }
+.r10 .pips div.sep { display:block; }
+

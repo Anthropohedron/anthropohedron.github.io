@@ -1,0 +1,161 @@
+.SMALL .spades, .SMALL .hearts, .SMALL .diamonds, .SMALL .clubs, .SMALL .notrump {
+	width:53px;
+	height:73px;
+	border:1px solid gray;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.SMALL .cardback {
+	width:53px;
+	height:73px;
+}
+
+.SMALL .surface {
+	left:-30px;
+	top:-85px;
+	width:100px;
+	height:100px;
+}
+
+.SMALL .cardLayout {
+	height: 73px;
+	margin: 0px 1px 0px 0px;
+}
+.SMALL .rankTLbox {
+	width: 11px;
+}
+.SMALL .rankBRbox {
+	width: 11px;
+}
+/******************************************************************************/
+.SMALL .tagpipTL img, .SMALL .tagpipBR img { width:44px; height:22px; }
+.SMALL .tagpipTL, .SMALL .tagpipBR {
+	width:11px;
+	height:11px;
+}
+.SMALL .spades   .tagpipTL .imgspan { top:0px; left:0px; }
+.SMALL .spades   .tagpipBR .imgspan { top:-11px; left:0px; }
+.SMALL .hearts   .tagpipTL .imgspan { top:0px; left:-11px; }
+.SMALL .hearts   .tagpipBR .imgspan { top:-11px; left:-11px; }
+.SMALL .diamonds .tagpipTL .imgspan { top:0px; left:-22px; }
+.SMALL .diamonds .tagpipBR .imgspan { top:-11px; left:-22px; }
+.SMALL .clubs    .tagpipTL .imgspan { top:0px; left:-33px; }
+.SMALL .clubs    .tagpipBR .imgspan { top:-11px; left:-33px; }
+.SMALL .rankTL img, .SMALL .rankBR img {
+	width: 152px;
+	height: 62px;
+}
+/******************************************************************************/
+.SMALL .spades   .rankTL img { top:-15px; }
+.SMALL .spades   .rankBR img { top:-34px; }
+.SMALL .spades   .rQ .rankBR img { top:-31px; }
+.SMALL .hearts   .rankTL img { top:0px; }
+.SMALL .hearts   .rankBR img { top:-50px; }
+.SMALL .hearts   .rQ .rankBR img { top:-46px; }
+.SMALL .diamonds .rankTL img { top:0px; }
+.SMALL .diamonds .rankBR img { top:-50px; }
+.SMALL .diamonds .rQ .rankBR img { top:-46px; }
+.SMALL .clubs    .rankTL img { top:-15px; }
+.SMALL .clubs    .rankBR img { top:-34px; }
+.SMALL .clubs    .rQ .rankBR img { top:-31px; }
+
+.SMALL .rankTL, .SMALL .rankBR {
+	margin: 2px 0px 2px 0px;
+	height:12px;
+	width:11px;
+}
+
+.SMALL .rA  .rankTL { width:12px; }
+.SMALL .rA  .rankBR { width:12px; left:-1px; }
+.SMALL .rA  .rankTL .imgspan { left:0px; }
+.SMALL .rA  .rankBR .imgspan { left:-141px; }
+.SMALL .r2  .rankTL .imgspan { left:-13px; }
+.SMALL .r2  .rankBR .imgspan { left:-129px; }
+.SMALL .r3  .rankTL .imgspan { left:-24px; }
+.SMALL .r3  .rankBR .imgspan { left:-118px; }
+.SMALL .r4  .rankTL .imgspan { left:-34px; }
+.SMALL .r4  .rankBR .imgspan { left:-108px; }
+.SMALL .r5  .rankTL .imgspan { left:-44px; }
+.SMALL .r5  .rankBR .imgspan { left:-97px; }
+.SMALL .r6  .rankTL .imgspan { left:-55px; }
+.SMALL .r6  .rankBR .imgspan { left:-87px; }
+.SMALL .r7  .rankTL .imgspan { left:-65px; }
+.SMALL .r7  .rankBR .imgspan { left:-76px; }
+.SMALL .r8  .rankTL .imgspan { left:-76px; }
+.SMALL .r8  .rankBR .imgspan { left:-65px; }
+.SMALL .r9  .rankTL .imgspan { left:-87px; }
+.SMALL .r9  .rankBR .imgspan { left:-55px; }
+.SMALL .r10 .rankTL { width:17px; }
+.SMALL .r10 .rankBR { width:17px; left:-6px; }
+.SMALL .r10 .rankTL .imgspan { left:-97px; }
+.SMALL .r10 .rankBR .imgspan { left:-39px; }
+.SMALL .rJ  .rankTL .imgspan { left:-114px; }
+.SMALL .rJ  .rankBR .imgspan { left:-28px; }
+.SMALL .rQ  .rankTL { height:15px; }
+.SMALL .rQ  .rankBR { height:15px; }
+.SMALL .rQ  .rankTL .imgspan { left:-127px; }
+.SMALL .rQ  .rankBR .imgspan { left:-14px; }
+.SMALL .rK  .rankTL { width:12px; }
+.SMALL .rK  .rankBR { width:12px; left:-1px; }
+.SMALL .rK  .rankTL .imgspan { left:-140px; }
+.SMALL .rK  .rankBR .imgspan { left:-1px; }
+/******************************************************************************/
+.SMALL .spades   .face .faceimg img { top:0px; }
+.SMALL .hearts   .face .faceimg img { top:-44px; }
+.SMALL .diamonds .face .faceimg img { top:-87px; }
+.SMALL .clubs    .face .faceimg img { top:-130px; }
+.SMALL .face {
+	border:1px solid #AAAAAA;
+	width:27px;
+	height:44px;
+}
+
+.SMALL .pips {
+	height: 44px;
+}
+
+.SMALL .faceimg img {
+	width: 78px;
+	height: 174px;
+}
+.SMALL .rJ .faceimg { left:   0px; }
+.SMALL .rQ .faceimg { left: -26px; }
+.SMALL .rK .faceimg { left:-52px; }
+/******************************************************************************/
+.SMALL .pips div {
+	width:7px;
+	height:7px;
+}
+.SMALL .pips div.sep { height: 4px; }
+.SMALL .pips div img {
+	width:29px;
+	height:14px;
+}
+
+.SMALL .spades   .pips div .imgspan { left:  0px; }
+.SMALL .hearts   .pips div .imgspan { left:-8px; }
+.SMALL .diamonds .pips div .imgspan { left:-14px; }
+.SMALL .clubs    .pips div .imgspan { left:-22px; }
+
+.SMALL .spades   .rA .pip6 .imgspan { left:   0px; }
+.SMALL .hearts   .rA .pip6 .imgspan { left: -22px; }
+.SMALL .diamonds .rA .pip6 .imgspan { left: -44px; }
+.SMALL .clubs    .rA .pip6 .imgspan { left:-66px; }
+
+.SMALL .pip3 .imgspan,
+.SMALL .pip4 .imgspan,
+.SMALL .pip7 .imgspan,
+.SMALL .pip8 .imgspan,
+.SMALL .pipB .imgspan,
+.SMALL .pipC .imgspan { top:-8px; }
+
+.SMALL .rA .pip6 {
+	width:22px;
+	height:22px;
+}
+.SMALL .rA .pip6 img {
+	width:88px;
+	height:44px;
+}
+
+.SMALL .r3 .pip6 { margin: 6px auto 6px auto; }
