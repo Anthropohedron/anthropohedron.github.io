@@ -19,82 +19,82 @@ var allcards = [];
 var cardRegex = new RegExp('^card_(.*)_(suit|rank|surf)$');
 
 function createTLDOM(parent) {
-  var node = newDiv(parent, 'rankTL');
-  node = newImgspan(node);
-  node = newImg(node, rankURL);
-  node = newDiv(parent, 'tagpipTL');
-  node = newImgspan(node);
-  node = newImg(node, pipsURL);
+  var node = DOMhelper.newDiv(parent, 'rankTL');
+  node = DOMhelper.newImgspan(node);
+  node = DOMhelper.newImg(node, rankURL);
+  node = DOMhelper.newDiv(parent, 'tagpipTL');
+  node = DOMhelper.newImgspan(node);
+  node = DOMhelper.newImg(node, pipsURL);
 }
 
 function createPipDOM(parent, num) {
-  var node = newDiv(parent, 'pip'+num.toString(16).toUpperCase());
-  node = newImgspan(node);
-  node = newImg(node, pipsURL);
+  var node = DOMhelper.newDiv(parent, 'pip'+num.toString(16).toUpperCase());
+  node = DOMhelper.newImgspan(node);
+  node = DOMhelper.newImg(node, pipsURL);
 }
 
 function createFaceDOM(parent) {
-  var pnode = newDiv(parent, 'face');
-  var node = newSpan(pnode, 'faceimg');
-  node = newImg(node, faceURL);
-  var pipTable = newTag(pnode, 'table', 'pips');
-  pipTable = newTag(pipTable, 'tbody');
+  var pnode = DOMhelper.newDiv(parent, 'face');
+  var node = DOMhelper.newSpan(pnode, 'faceimg');
+  node = DOMhelper.newImg(node, faceURL);
+  var pipTable = DOMhelper.newTag(pnode, 'table', 'pips');
+  pipTable = DOMhelper.newTag(pipTable, 'tbody');
 
-  var pipRow = newTag(pipTable, 'tr');
-  pnode = newTag(pipRow, 'td', 'topRow');
+  var pipRow = DOMhelper.newTag(pipTable, 'tr');
+  pnode = DOMhelper.newTag(pipRow, 'td', 'topRow');
   createPipDOM(pnode, 1);
-  pnode = newTag(pipRow, 'td', 'centerCol');
+  pnode = DOMhelper.newTag(pipRow, 'td', 'centerCol');
   pnode.rowSpan = 3;
   createPipDOM(pnode, 5);
   createPipDOM(pnode, 6);
   createPipDOM(pnode, 7);
   createPipDOM(pnode, 8);
-  pnode = newTag(pipRow, 'td', 'topRow');
+  pnode = DOMhelper.newTag(pipRow, 'td', 'topRow');
   createPipDOM(pnode, 9);
 
-  pipRow = newTag(pipTable, 'tr');
-  pnode = newTag(pipRow, 'td');
+  pipRow = DOMhelper.newTag(pipTable, 'tr');
+  pnode = DOMhelper.newTag(pipRow, 'td');
   createPipDOM(pnode, 2);
-  newDiv(pnode, 'sep');
+  DOMhelper.newDiv(pnode, 'sep');
   createPipDOM(pnode, 3);
-  pnode = newTag(pipRow, 'td');
+  pnode = DOMhelper.newTag(pipRow, 'td');
   createPipDOM(pnode, 10);
-  newDiv(pnode, 'sep');
+  DOMhelper.newDiv(pnode, 'sep');
   createPipDOM(pnode, 11);
 
-  pipRow = newTag(pipTable, 'tr');
-  pnode = newTag(pipRow, 'td', 'bottomRow');
+  pipRow = DOMhelper.newTag(pipTable, 'tr');
+  pnode = DOMhelper.newTag(pipRow, 'td', 'bottomRow');
   createPipDOM(pnode, 4);
-  pnode = newTag(pipRow, 'td', 'bottomRow');
+  pnode = DOMhelper.newTag(pipRow, 'td', 'bottomRow');
   createPipDOM(pnode, 12);
 }
 
 function createBRDOM(parent) {
-  var node = newDiv(parent, 'tagpipBR');
-  node = newImgspan(node);
-  node = newImg(node, pipsURL);
-  node = newDiv(parent, 'rankBR');
-  node = newImgspan(node);
-  node = newImg(node, rankURL);
+  var node = DOMhelper.newDiv(parent, 'tagpipBR');
+  node = DOMhelper.newImgspan(node);
+  node = DOMhelper.newImg(node, pipsURL);
+  node = DOMhelper.newDiv(parent, 'rankBR');
+  node = DOMhelper.newImgspan(node);
+  node = DOMhelper.newImg(node, rankURL);
 }
 
 function createCardDOM(cardname, rank, suit, parent) {
   if (parent==null) {
     parent = document.body;
   }
-  var cardNode = newDiv(parent, suit);
-  var rankNode = newDiv(cardNode, rank);
+  var cardNode = DOMhelper.newDiv(parent, suit);
+  var rankNode = DOMhelper.newDiv(cardNode, rank);
   cardNode.id = 'card_' + cardname + '_suit';
   rankNode.id = 'card_' + cardname + '_rank';
-  var cardTable = newTag(rankNode, 'table', 'cardLayout');
-  cardTable = newTag(cardTable, 'tbody');
-  var tableRow = newTag(cardTable, 'tr');
+  var cardTable = DOMhelper.newTag(rankNode, 'table', 'cardLayout');
+  cardTable = DOMhelper.newTag(cardTable, 'tbody');
+  var tableRow = DOMhelper.newTag(cardTable, 'tr');
 
-  createTLDOM(newTag(tableRow, 'td', 'rankTLbox'));
-  createFaceDOM(newTag(tableRow, 'td', 'faceBox'));
-  createBRDOM(newTag(tableRow, 'td', 'rankBRbox'));
+  createTLDOM(DOMhelper.newTag(tableRow, 'td', 'rankTLbox'));
+  createFaceDOM(DOMhelper.newTag(tableRow, 'td', 'faceBox'));
+  createBRDOM(DOMhelper.newTag(tableRow, 'td', 'rankBRbox'));
 
-  var surf = newDiv(rankNode, 'surface');
+  var surf = DOMhelper.newDiv(rankNode, 'surface');
   surf.id = 'card_' + cardname + '_surf';
 
   return [cardNode, rankNode];
@@ -213,7 +213,7 @@ setFaceUp : function(faceup) { if (faceup!=this.faceup) this.flipOver(); },
 highlight : function(lit) {
               if ((lit) && (this.oldBorderWidth==null)) {
                 this.oldBorderWidth = this.node.style.borderWidth;
-                var nm = (stripPX(this.oldBorderWidth) - 4)+'px';
+                var nm = (DOMhelper.stripPX(this.oldBorderWidth) - 4)+'px';
                 this.node.style.margin = nm + ' ' + nm + ' ' + nm + ' ' + nm;
                 this.node.style.borderWidth = '4px';
                 this.node.style.borderColor = '#22CC22';
@@ -312,7 +312,7 @@ function findParentCard(obj) {
 function findParentCardByID(objectID) {
   var ret = null;
   if ((objectID!=null)&&(objectID!="")) {
-    var obj = findDOM(objectID, 0);
+    var obj = $(objectID);
     ret = findParentCard(obj);
   }
   return ret;

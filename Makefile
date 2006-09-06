@@ -7,8 +7,7 @@ SCRIPTACULOUS= \
 	scriptaculous/scriptaculous.js	\
 	scriptaculous/slider.js	
 CARDSCRIPTS= \
-	javascript/findDOM.js	\
-	javascript/css.js	\
+	javascript/dom_helper.js	\
 	javascript/stack.js	\
 	javascript/undo.js	\
 	javascript/dnd.js	\
