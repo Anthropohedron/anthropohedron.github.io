@@ -1,9 +1,9 @@
 SCRIPTACULOUS=                         \
 	scriptaculous/prototype.js     \
+	scriptaculous/effects.js       \
 	scriptaculous/builder.js       \
 	scriptaculous/controls.js      \
 	scriptaculous/dragdrop.js      \
-	scriptaculous/effects.js       \
 	scriptaculous/scriptaculous.js \
 	scriptaculous/slider.js	
 CARDSCRIPTS=                     \
