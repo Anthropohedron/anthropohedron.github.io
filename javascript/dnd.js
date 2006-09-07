@@ -39,7 +39,7 @@ oldZ : 0,
 mouseDown : function(event) {
               var evt = new CEvent((event) ? event : window.event);
               if (evt.objectID!=null) {
-                this.dragCard = this.game.pickCard(findParentCardByID(evt.objectID), this);
+                this.dragCard = this.game.pickCard(Card.findParentCardByID(evt.objectID), this);
                 if (this.dragCard!=null) {
                   this.dragCard.highlight(false);
                   this.cX = evt.x - this.dragCard.rect.left;
@@ -81,7 +81,7 @@ mouseUp : function(evt) {
 click : function(event) {
           var evt = new CEvent((event) ? event : window.event);
           if (evt.objectID!=null) {
-            var card = findParentCardByID(evt.objectID);
+            var card = Card.findParentCardByID(evt.objectID);
             if (card!=null) {
               this.game.clickCard(card, this);
             }
@@ -92,7 +92,7 @@ click : function(event) {
 dblClick : function(event) {
              var evt = new CEvent((event) ? event : window.event);
              if (evt.objectID!=null) {
-               var card = findParentCardByID(evt.objectID);
+               var card = Card.findParentCardByID(evt.objectID);
                if (card!=null) {
                  this.game.dblclickCard(card, this);
                }
