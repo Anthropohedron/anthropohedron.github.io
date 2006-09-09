@@ -15,81 +15,100 @@
 	src="javascript/klondike.js"></script>
 <script language="javascript" type="text/javascript">
 
-var game = null;
-var dealing = null;
 
-function chooseSize(size) {
-  document.body.className = size;
-  if (game) game.reposition();
-  document.cookie = "preferredSize="+size;
-}
+Event.observe(window, 'load', function() {
+  var game = null;
 
-function getPreferredSize() {
-  var dc = document.cookie;
-  var prefix = "preferredSize=";
-  var begin = dc.indexOf("; " + prefix);
-  if (begin == -1) {
-    begin = dc.indexOf(prefix);
-    if (begin != 0) return "LARGE";
-  } else
-    begin += 2;
-  var end = document.cookie.indexOf(";", begin);
-  if (end == -1)
-    end = dc.length;
-  return unescape(dc.substring(begin + prefix.length, end));
-}
+  var gameSelect = $('gameSelect');
+  var rulesLink = $('rulesLink');
 
-function selectGame(options) {
-  var i;
-  for (i=0;i<options.length;++i) {
-    if (options[i].value=="none") {
-      options[i--] = null;
-    } else if (options[i].selected) {
-      if (game) game.deactivate();
-      if (options[i].game==null) {
-	eval('game = new '+options[i].value+'(10, 110);');
-        options[i].game = game;
-      } else {
-        game = options[i].game;
-      }
-      game.activate();
-      document.links[0].hash = options[i].value;
-      return;
+  Event.observe(gameSelect, 'change', function() {
+    var options = gameSelect.options;
+    var option = options[gameSelect.selectedIndex];
+    var newGame = null;
+    if (option.value == "none") return;
+    if (option.game) {
+      newGame = option.game
+    } else {
+      newGame = eval('new '+option.value+'(10, 110);');
+      option.game = newGame;
     }
-  }
-}
+    if (options[0].value=="none") {
+      options[0] = null;
+    }
+    if (game!=newGame) {
+      if (game) game.deactivate();
+      game = newGame;
+      game.activate();
+      rulesLink.hash = option.value;
+    }
+    return;
+  });
 
-function deal() {
-  if (game) {
-    dealing.style.visibility = "visible";
-    setTimeout('game.deal(); dealing.style.visibility = "hidden";', 100);
-  }
-}
+  var dealing = document.getElementById("dealing");
+  var dealFunc = function() {
+    game.deal();
+    dealing.style.visibility = "hidden";
+  };
 
-function initOnLoad() {
+  Event.observe('deal', 'click', function() {
+    if (game) {
+      dealing.style.visibility = "visible";
+      setTimeout(dealFunc, 100);
+    }
+  });
+
+  var chooseSize = function(size) {
+    size = (""+size).toUpperCase();
+    document.body.className = size;
+    if (game) game.reposition();
+    var radio = $(size.toLowerCase()+'cards');
+    if (radio) radio.checked = true;
+    document.cookie = "preferredSize="+size;
+  };
+
+  Event.observe('largecards', 'click', function() { chooseSize('LARGE'); });
+  Event.observe('smallcards', 'click', function() { chooseSize('SMALL'); });
+  Event.observe('undo', 'click', function() { if (game) game.undo(); });
+  Event.observe('redo', 'click', function() { if (game) game.redo(); });
+
+  var getPreferredSize = function() {
+    var dc = document.cookie;
+    var prefix = "preferredSize=";
+    var begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+      begin = dc.indexOf(prefix);
+      if (begin != 0) return "LARGE";
+    } else
+      begin += 2;
+    var end = document.cookie.indexOf(";", begin);
+    if (end == -1)
+      end = dc.length;
+    return unescape(dc.substring(begin + prefix.length, end));
+  };
   chooseSize(getPreferredSize());
-  dealing = document.getElementById("dealing");
-}
+});
 
 </script>
-</HEAD><BODY bgcolor="#CCCCCC" class="LARGE" onLoad="initOnLoad();">
+</HEAD><BODY bgcolor="#CCCCCC" class="LARGE">
 
-<form action="#" name="form0" method="get">
-<select onChange="selectGame(document.forms[0].elements[0].options)">
+<form action="#" method="get">
+<select id="gameSelect">
 <option value="none" SELECTED>select a game
 <option value="seahaven">Seahaven Towers
 <!--
 <option value="klondike">Klondike
 -->
 </select>
-<input type="button" value="Deal" onClick="deal();">
-<input type="button" value="Undo" onClick="game.undo();">
-<input type="button" value="Redo" onClick="game.redo();">
-<a href="http://www.allgoodsw.com/sol_rules.html" TARGET="rules">rules</a><br>
-<input type="radio" name="cardSize" value="LARGE"
-onClick="chooseSize('LARGE');">large cards
-<input type="radio" name="cardSize" value="SMALL"
-onClick="chooseSize('SMALL');">small cards
+<input type="button" value="Deal" id="deal" />
+<input type="button" value="Undo" id="undo" />
+<input type="button" value="Redo" id="redo" />
+<a href="http://www.allgoodsw.com/sol_rules.html"
+  id="rulesLink" TARGET="rules">rules</a><br>
+<label for="largecards"><input type="radio" name="cardSize" id="largecards"
+value="LARGE" />large cards</label>
+<label for="smallcards"><input type="radio" name="cardSize" id="smallcards"
+value="SMALL" />small cards</label>
 </form>
 <span id="dealing" style="color:red; visibility:hidden;">Dealing...</span>
 
