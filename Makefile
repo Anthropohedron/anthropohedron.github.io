@@ -5,7 +5,7 @@ SCRIPTACULOUS=                         \
 	scriptaculous/controls.js      \
 	scriptaculous/dragdrop.js      \
 	scriptaculous/scriptaculous.js \
-	scriptaculous/slider.js	
+	scriptaculous/slider.js
 CARDSCRIPTS=                     \
 	javascript/dom_helper.js \
 	javascript/stack.js      \
