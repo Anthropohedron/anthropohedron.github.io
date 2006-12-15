@@ -241,7 +241,7 @@ makeCardback : function() {
 
 toString : function() {
 		   return 'Card: ' + this.rank + ' of ' + this.suit; 
-	   },
+	   }
 
 };
 
