@@ -47,6 +47,7 @@ getCardByID: function(cardID) {
 },
 
 findParentCard: function(obj) {
+  obj = $(obj);
   while (obj) {
     var matches = this.cardRegex.exec(obj.id);
     if (matches!=null) {
@@ -56,16 +57,6 @@ findParentCard: function(obj) {
     }
   }
   return null;
-},
-
-findParentCardByID: function(objectID) {
-  var ret = null;
-  if ((objectID!=null)&&(objectID!="")) {
-    var obj = $(objectID);
-    ret = this.findParentCard(obj);
-  }
-  return ret;
-
 }
 
 });
@@ -236,11 +227,11 @@ makePlaceholder : function() {
 		  },
 
 makeCardback : function() {
-		       this.rankNode.className = 'cardback'; 
+		       this.rankNode.className = 'cardback';
 	       },
 
 toString : function() {
-		   return 'Card: ' + this.rank + ' of ' + this.suit; 
+		   return 'Card: ' + this.rank + ' of ' + this.suit;
 	   }
 
 };

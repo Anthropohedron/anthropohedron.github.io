@@ -61,7 +61,8 @@ constructMe : function(element) {
                   [ this.dragger.dblClick, 'dblclick' ]
                 ];
                 handlers.each(function(h) {
-                    Event.observe(element, h[1], h[0].bind(this.dragger));
+                    Event.observe(element, h[1],
+                      h[0].bindAsEventListener(this.dragger));
                     }.bind(this));
               },
 
@@ -96,9 +97,9 @@ rejectCardMove : function(card) {
 
 pickCard : function(card, dragger) { return true; },
 
-movedCard : function(card, dragger) { },
+movedCard : function(evt, card, dragger) { },
 
-dropCard : function(card, dragger) { },
+dropCard : function(evt, card, dragger) { },
 
 clickCard : function(card, dragger) { },
 

@@ -113,30 +113,33 @@ movedCard : function(evt, card, dragger) {
               var curCard;
               var i = 0;
               var cnum = card.number;
+              var evtX = Event.pointerX(evt);
+              var evtY = Event.pointerY(evt);
               this.newLoc = null;
               for (i=0;i<10;++i) {
                 curCard = this.stacks[i].top();
                 if ((curCard==null)&&((cnum%13)==12)) {
                   curCard = this.stacks[i].placeholder;
-                  highlight = curCard.contains(evt.x, evt.y);
+                  highlight = curCard.contains(evtX, evtY);
                   curCard.highlight(highlight);
                   if (highlight) {
                     this.newLoc = curCard.location;
                   }
                 } else if ((curCard!=null)&&(curCard.number==(cnum+1))) {
-                  highlight = curCard.contains(evt.x, evt.y);
+                  highlight = curCard.contains(evtX, evtY);
                   curCard.highlight(highlight);
                   if (highlight) {
                     this.newLoc = curCard.location;
                   }
-                  //alert('' + evt.x + ', ' + evt.y + ' in ' + curCard.rect.toString());
+                  //alert('' + evtX + ', ' + evtY + ' in ' + curCard.rect.toString());
                 }
               }
               if (this.dragStackSize<=this.holeCount()) {
                 for (i=0;i<4;++i) {
                   if (this.holes[i].top()==null) {
                     curCard = this.holes[i].placeholder;
-                    highlight = curCard.contains(evt.x, evt.y);
+                    highlight = curCard.contains(Event.pointerX(evt),
+                        Event.pointerY(evt));
                     curCard.highlight(highlight);
                     if (highlight) {
                       this.newLoc = curCard.location;

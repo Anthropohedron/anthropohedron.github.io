@@ -1,25 +1,3 @@
-// CEvent class
-// --------------------
-// This makes the x and y values of an event convenient to get at. It may
-// deal with other such issues at another time.
-
-function CEvent(evt) {
-  if (evt.pageX) {
-    this.x = evt.pageX;
-    this.y = evt.pageY;
-  } else if (evt.clientX) {
-    this.x = evt.clientX;
-    this.y = evt.clientY;
-  } else if (evt.x) {
-    this.x = evt.x;
-    this.y = evt.y;
-  } else {
-    this.x = 0;
-    this.y = 0;
-  }
-  this.objectID = (evt.target) ? evt.target.id : ((evt.srcElement) ? evt.srcElement.id : null);
-}
-
 // CardDragger class
 // -----------------
 // This manages a card being dragged around the playing field. It mostly
@@ -36,16 +14,18 @@ cX : 0,
 cY : 0,
 oldZ : 0,
 
-mouseDown : function(event) {
-              var evt = new CEvent((event) ? event : window.event);
-              if (evt.objectID!=null) {
-                this.dragCard = this.game.pickCard(Card.findParentCardByID(evt.objectID), this);
-                if (this.dragCard!=null) {
-                  this.dragCard.highlight(false);
-                  this.cX = evt.x - this.dragCard.rect.left;
-                  this.cY = evt.y - this.dragCard.rect.top;
-                  this.oldZ = this.dragCard.getZ();
-                  this.dragCard.setZ(this.oldZ + 150);
+mouseDown : function(evt) {
+              var element = Event.element(evt);
+              if (element) {
+                var dragCard =
+                  this.game.pickCard(Card.findParentCard(element), this);
+                this.dragCard = dragCard;
+                if (dragCard!=null) {
+                  dragCard.highlight(false);
+                  this.cX = Event.pointerX(evt) - dragCard.rect.left;
+                  this.cY = Event.pointerY(evt) - dragCard.rect.top;
+                  this.oldZ = dragCard.getZ();
+                  dragCard.setZ(this.oldZ + 150);
                   //return true;
                 } else {
                   this.dragCard = null;
@@ -56,9 +36,8 @@ mouseDown : function(event) {
             },
 
 mouseMove : function(evt) {
-              evt = new CEvent((evt) ? evt : ((window.event) ? window.event : null));
               if (this.dragCard!=null) {
-                this.dragCard.moveTo(evt.x - this.cX, evt.y - this.cY);
+                this.dragCard.moveTo(Event.pointerX(evt) - this.cX, Event.pointerY(evt) - this.cY);
                 this.game.movedCard(evt, this.dragCard, this);
                 //return true;
               }
@@ -67,7 +46,6 @@ mouseMove : function(evt) {
 
 mouseUp : function(evt) {
             if (this.dragCard!=null) {
-              evt = new CEvent((evt) ? evt : ((window.event) ? window.event : null));
               var card = this.dragCard;
 
               this.dragCard = null;
@@ -78,24 +56,18 @@ mouseUp : function(evt) {
             return false;
           },
 
-click : function(event) {
-          var evt = new CEvent((event) ? event : window.event);
-          if (evt.objectID!=null) {
-            var card = Card.findParentCardByID(evt.objectID);
-            if (card!=null) {
-              this.game.clickCard(card, this);
-            }
+click : function(evt) {
+          var card = Card.findParentCard(Event.element(evt));
+          if (card!=null) {
+            this.game.clickCard(card, this);
           }
           return false;
         },
 
-dblClick : function(event) {
-             var evt = new CEvent((event) ? event : window.event);
-             if (evt.objectID!=null) {
-               var card = Card.findParentCardByID(evt.objectID);
-               if (card!=null) {
-                 this.game.dblclickCard(card, this);
-               }
+dblClick : function(evt) {
+             var card = Card.findParentCard(Event.element(evt));
+             if (card!=null) {
+               this.game.dblclickCard(card, this);
              }
              return false;
            }
