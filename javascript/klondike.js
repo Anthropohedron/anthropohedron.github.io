@@ -2,11 +2,12 @@
 // --------------
 // An implementation of Klondike. Subclass of CardGame.
 
-function klondike(x, y) {
+function klondike(element, x, y) {
+  this.constructMe(element);
   var i = 0;
   this.x = (x==null) ? 0 : x;
   this.y = (y==null) ? 0 : y;
-  this.deck = new CardDeck('klondike');
+  this.deck = new CardDeck('klondike', this.element);
   this.aces = new Array();
   this.stacks = new Array(7);
   this.stockLoc = this.newLocation(this.x, this.y, 0, 0);
@@ -19,7 +20,6 @@ function klondike(x, y) {
     this.stacks[i] = this.newLocation(this.x, this.y, 0, 0);
   }
   this.reposition();
-  this.constructMe();
 }
 
 klondike.prototype = new CardGame().subclass({

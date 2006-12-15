@@ -2,11 +2,12 @@
 // --------------
 // An implementation of Seahaven Towers. Subclass of CardGame.
 
-function seahaven(x, y) {
+function seahaven(element, x, y) {
+  this.constructMe(element);
   var i = 0;
   this.x = (x==null) ? 0 : x;
   this.y = (y==null) ? 0 : y;
-  this.deck = new CardDeck('seahaven');
+  this.deck = new CardDeck('seahaven', this.element);
   this.aces = new Array();
   this.holes = new Array(4);
   this.stacks = new Array(10);
@@ -21,7 +22,6 @@ function seahaven(x, y) {
     this.stacks[i] = this.newLocation(this.x, this.y, 0, 0);
   }
   this.reposition();
-  this.constructMe();
 }
 
 seahaven.prototype = new CardGame().subclass({

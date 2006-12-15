@@ -2,13 +2,13 @@
 // --------------
 // This represents a deck of cards, which can be shuffled and dealt.
 
-function CardDeck(deckname) {
+function CardDeck(deckname, element) {
   this.cardstack = new Array(52);
   this.cards = [];
   this.shownCards = [];
   this.name = ''+deckname;
   for (var i=0;i<52;++i) {
-    var card = new Card(this.name+i, i, document.body, false);
+    var card = new Card(this.name+i, i, element, false);
     card.show(false);
     card.setZ(1);
     this.cards[this.name+i] = card;

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML><HEAD>
-<TITLE>Cards Dev</TITLE>
+<html><head>
+<title>Cards Dev</title>
 <link rel="stylesheet" type="text/css" href="cards.css">
 <link rel="stylesheet" type="text/css" href="smallcards.css">
 <link rel="stylesheet" type="text/css" href="largecards.css">
@@ -30,7 +30,7 @@ Event.observe(window, 'load', function() {
     if (option.game) {
       newGame = option.game
     } else {
-      newGame = eval('new '+option.value+'(10, 110);');
+      newGame = eval('new '+option.value+'("card_game_element", 10, 110);');
       option.game = newGame;
     }
     if (options[0].value=="none") {
@@ -90,7 +90,7 @@ Event.observe(window, 'load', function() {
 });
 
 </script>
-</HEAD><BODY bgcolor="#CCCCCC" class="LARGE">
+</head><body bgcolor="#CCCCCC" class="LARGE">
 
 <form action="#" method="get">
 <select id="gameSelect">
@@ -111,5 +111,6 @@ value="LARGE" />large cards</label>
 value="SMALL" />small cards</label>
 </form>
 <span id="dealing" style="color:red; visibility:hidden;">Dealing...</span>
+<div id="card_game_element"></div>
 
-</BODY></HTML>
+</body></html>

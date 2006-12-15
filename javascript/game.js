@@ -50,32 +50,19 @@ deactivate : function() {
                this.shuffle();
              },
 
-constructMe : function() {
+constructMe : function(element) {
+                this.element = $(element);
                 this.dragger = new CardDragger(this);
-                document.dragger = this.dragger;
                 var handlers = [
-                  function(event) { return document.dragger.mouseDown(event); },
-                  function(event) { return document.dragger.mouseMove(event); },
-                  function(event) { return document.dragger.mouseUp(event); },
-                  function(event) { return document.dragger.mouseUp(event); },
-                  function(event) { return document.dragger.click(event); },
-                  function(event) { return document.dragger.dblClick(event); }
+                  [ this.dragger.mouseDown, 'mousedown' ],
+                  [ this.dragger.mouseMove, 'mousemove' ],
+                  [ this.dragger.mouseUp, 'mouseup' ],
+                  [ this.dragger.click, 'click' ],
+                  [ this.dragger.dblClick, 'dblclick' ]
                 ];
-                if (document.attachEvent) {
-                  document.attachEvent('onmousedown', handlers[0]);
-                  document.attachEvent('onmousemove', handlers[1]);
-                  document.attachEvent('onmouseup',   handlers[2]);
-                  document.attachEvent('onmouseup',   handlers[3]);
-                  document.attachEvent('onclick',     handlers[4]);
-                  document.attachEvent('ondblclick',  handlers[5]);
-                } else {
-                  document.onmousedown = handlers[0];
-                  document.onmousemove = handlers[1];
-                  document.onmouseup   = handlers[2];
-                  document.onmouseup   = handlers[3];
-                  document.onclick     = handlers[4];
-                  document.ondblclick  = handlers[5];
-                }
+                handlers.each(function(h) {
+                    Event.observe(element, h[1], h[0].bind(this.dragger));
+                    }.bind(this));
               },
 
 redo : function() { this.actions.redo(); },
