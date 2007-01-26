@@ -13,9 +13,7 @@ function CardGame() {
 CardGame.prototype = {
 
   subclass: function(json) {
-    for (property in json) {
-      this[property] = json[property];
-    }
+    Object.extend(this, json);
     return this;
   },
 
