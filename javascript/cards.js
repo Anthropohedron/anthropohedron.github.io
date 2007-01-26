@@ -4,6 +4,8 @@
 // representation, its state, its location, etc. There are also a bunch of
 // standalone functions and variables related to it.
 
+Effect.Queues.get('cardscope');
+
 function Card(cardname, number, parent, faceup) {
   var nodes = CardDOM.createCardDOM(cardname, 'cardback', 'notrump', parent);
   this.name = cardname;
@@ -104,7 +106,7 @@ detach : function() {
   }
 },
 
-attachCard : function(card, dx, dy) {
+attachCard : function(card, dx, dy, dealing) {
   //alert('Attached to ' + this.toString());
   if (this.child==null) {
     if (card!=null) {
@@ -113,12 +115,18 @@ attachCard : function(card, dx, dy) {
       card.detach();
       this.child = card;
       card.parent = this;
-      card.moveTo(this.rect.left+this.childDX,
-          this.rect.top+this.childDY,
-          this.getZ()+1);
+      var x = this.destination ? this.destination[0] : this.rect.left;
+      var y = this.destination ? this.destination[1] : this.rect.top;
+      x += this.childDX;
+      y += this.childDY;
+      if (dealing) {
+        card.moveTo(x, y, this.getZ()+1);
+      } else {
+        card.animateMoveTo(x, y, this.getZ()+1);
+      }
     }
   } else {
-    this.child.attachCard(card);
+    this.child.attachCard(card, null, null, dealing);
   }
 },
 
@@ -136,7 +144,7 @@ reattach : function(dx, dy) {
 moveTo : function(x, y, z) {
   this.node.style.left = '' + x + 'px';
   this.node.style.top  = '' + y + 'px';
-  this.rect.updateFromNode(this.node);
+  this.resetAfterMove({ card: this });
   if (z==null) {
     z = this.getZ() + 1;
   } else {
@@ -148,8 +156,51 @@ moveTo : function(x, y, z) {
   }
 },
 
-moveBy : function(dx, dy, z) {
-  this.moveTo(dx + this.rect.left, dy + this.rect.top, z);
+resetAfterMove : function(obj) {
+  obj = obj.card;
+  obj.rect.updateFromNode(obj.node);
+  if (obj.destination) {
+    obj.node.style.zIndex = obj.destination[2];
+    obj.destination = null;
+  }
+},
+
+animateMoveTo : function(x, y, z, duration) {
+  var dx = x - (this.destination ?
+      this.destination[0] : parseInt(this.node.style.left));
+  var dy = y - (this.destination ?
+      this.destination[1] : parseInt(this.node.style.top));
+  if (!duration) duration = 0.25;
+  var options = { queue: { position: "end", scope: "cardscope" },
+    duration: duration,
+    fps: 60,
+    transition: Effect.Transitions.sinoidal,
+    afterFinish: this.resetAfterMove };
+  this.buildMoveEffect(dx, dy, z, options);
+},
+
+buildMoveEffect : function(dx, dy, z, baseOptions) {
+  var x = parseInt(this.node.style.left);
+  var y = parseInt(this.node.style.top);
+  if (this.destination) {
+    x = this.destination[0];
+    y = this.destination[1];
+    this.resetAfterMove({ card: this });
+  }
+  var options = Object.extend({}, baseOptions);
+  options.beforeStart = function() {
+    this.node.style.zIndex = z+25;
+  }.bind(this);
+  if (z==null) z = this.getZ();
+  this.destination = [
+    x+dx,
+    y+dy,
+    z ];
+  var effect = new Effect.MoveBy(this.node, dy, dx, options);
+  effect.card = this;
+  if (this.child!=null) {
+    this.child.buildMoveEffect(dx, dy, z+1, baseOptions);
+  }
 },
 
 changeTo : function(rank, suit) {
@@ -197,7 +248,10 @@ isRed : function() {
       (this.suit==Card.suitlist[2]));
 },
 
-getZ : function() { return 1*this.node.style.zIndex; },
+getZ : function() {
+  var z = this.destination ? this.destination[2] : 1*this.node.style.zIndex;
+  return z;
+},
 
 setZ : function(z) {
   this.node.style.zIndex = z;

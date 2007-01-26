@@ -59,12 +59,16 @@ CardLocation.prototype = {
     return card;
   },
 
-  push: function(card) {
+  push: function(card, dealing) {
     if (card instanceof Card) {
       if (this.cardStack.size()==0) {
-        card.moveTo(this.x, this.y, 1);
+        if (dealing) {
+          card.moveTo(this.x, this.y, 1);
+        } else {
+          card.animateMoveTo(this.x, this.y, 1);
+        }
       } else {
-        this.top().attachCard(card, this.dx, this.dy);
+        this.top().attachCard(card, this.dx, this.dy, dealing);
       }
       this.cardStack.push(card);
       card.location = this;

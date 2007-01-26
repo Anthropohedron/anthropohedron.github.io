@@ -57,7 +57,7 @@ dealTo : function(loc, faceup) {
              this.shownCards[card.name] = card;
              card.setFaceUp(false);
              card.show(true);
-             loc.push(card);
+             loc.push(card, true);
              card.setFaceUp(faceup);
            }
          },

@@ -24,10 +24,8 @@ NetCardGame.prototype = new CardGame().subclass({
   handleTurn: function(evt) { alert("Must override handleTurn()"); },
 
   beginGame: function() {
-    this.wrappedPoll = AJAXrequest.prototype.wrapMethod(
-        this.pollAction, this);
-    this.wrappedHandle = AJAXrequest.prototype.wrapMethod(
-        this.handleOneAction, this);
+    this.wrappedPoll = this.pollAction.bind(this);
+    this.wrappedHandle = this.handleOneAction.bind(this);
     this.pollAction();
     setTimeout(this.wrappedHandle, this.handleTimeout);
   },
