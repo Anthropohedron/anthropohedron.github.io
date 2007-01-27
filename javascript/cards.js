@@ -182,6 +182,7 @@ animateMoveTo : function(x, y, z, duration) {
 buildMoveEffect : function(dx, dy, z, baseOptions) {
   var x = parseInt(this.node.style.left);
   var y = parseInt(this.node.style.top);
+  var oldZ = this.getZ();
   if (this.destination) {
     x = this.destination[0];
     y = this.destination[1];
@@ -189,7 +190,7 @@ buildMoveEffect : function(dx, dy, z, baseOptions) {
   }
   var options = Object.extend({}, baseOptions);
   options.beforeStart = function() {
-    this.node.style.zIndex = z+25;
+    this.node.style.zIndex = oldZ+25;
   }.bind(this);
   if (z==null) z = this.getZ();
   this.destination = [
