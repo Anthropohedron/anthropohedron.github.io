@@ -4,10 +4,16 @@
 	border:1px solid gray;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+	margin: 0;
 }
 .SMALL .cardback {
 	width:53px;
 	height:73px;
+}
+
+.SMALL div.highlight {
+	border: 2px solid #22CC22;
+	margin: -1px;
 }
 
 .SMALL .surface {

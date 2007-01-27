@@ -226,21 +226,10 @@ flipOver : function() {
 setFaceUp : function(faceup) { if (faceup!=this.faceup) this.flipOver(); },
 
 highlight : function(lit) {
-  if ((lit) && (this.oldBorderWidth==null)) {
-    this.oldBorderWidth = this.node.style.borderWidth;
-    var nm = (DOMhelper.stripPX(this.oldBorderWidth) - 4)+'px';
-    this.node.style.margin = nm;
-    this.node.style.borderWidth = '4px';
-    this.node.style.borderColor = '#22CC22';
-    if (this.faceup)
-      this.node.style.backgroundColor = '#F8FFF8';
-  } else if ((!lit) && (this.oldBorderWidth!=null)) {
-    this.node.style.margin = '0px';
-    this.node.style.borderWidth = this.oldBorderWidth;
-    this.oldBorderWidth = null;
-    this.node.style.borderColor = 'gray';
-    if (this.faceup)
-      this.node.style.backgroundColor = 'white';
+  if (lit) {
+    Element.addClassName(this.node, 'highlight');
+  } else {
+    Element.removeClassName(this.node, 'highlight');
   }
 },
 

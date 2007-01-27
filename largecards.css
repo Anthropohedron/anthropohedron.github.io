@@ -4,10 +4,16 @@
 	border:2px solid gray;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
+	margin: 0;
 }
 .LARGE .cardback {
 	width:106px;
 	height:146px;
+}
+
+.LARGE div.highlight {
+	border: 4px solid #22CC22;
+	margin: -2px;
 }
 
 .LARGE .surface {

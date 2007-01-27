@@ -12,6 +12,11 @@
 	background-color: gray;
 	background-image: url("images/bg.png");
 }
+
+div.highlight {
+	background-color: #E0FFFF;
+}
+
 .cardback div { display:none; }
 
 .notrump .cardplace {
