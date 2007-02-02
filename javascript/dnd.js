@@ -29,8 +29,15 @@ CardDragger.prototype = {
     element = null;
   },
 
+  isAnimating: function() {
+    var queue = Effect.Queues.get('cardscope');
+    return queue.effects.detect(function(e) { return e.state != 'finished'; });
+  },
+
   mouseDown: function(evt) {
     var element = Event.element(evt);
+    Event.stop(evt);
+    if (this.isAnimating()) return;
     if (element) {
       var dragCard =
         this.game.pickCard(Card.findParentCard(element), this);
@@ -51,6 +58,8 @@ CardDragger.prototype = {
   },
 
   mouseMove: function(evt) {
+    Event.stop(evt);
+    if (this.isAnimating()) return;
     if (this.dragCard!=null) {
       this.dragCard.moveTo(Event.pointerX(evt) - this.cX, Event.pointerY(evt) - this.cY);
       this.game.movedCard(evt, this.dragCard, this);
@@ -60,6 +69,8 @@ CardDragger.prototype = {
   },
 
   mouseUp: function(evt) {
+    Event.stop(evt);
+    if (this.isAnimating()) return;
     if (this.dragCard!=null) {
       var card = this.dragCard;
 
@@ -72,7 +83,10 @@ CardDragger.prototype = {
   },
 
   click: function(evt) {
-    var card = Card.findParentCard(Event.element(evt));
+    var element = Event.element(evt);
+    Event.stop(evt);
+    if (this.isAnimating()) return;
+    var card = Card.findParentCard(element);
     if (card!=null) {
       this.game.clickCard(card, this);
     }
@@ -80,7 +94,10 @@ CardDragger.prototype = {
   },
 
   dblClick: function(evt) {
-    var card = Card.findParentCard(Event.element(evt));
+    var element = Event.element(evt);
+    Event.stop(evt);
+    if (this.isAnimating()) return;
+    var card = Card.findParentCard(element);
     if (card!=null) {
       this.game.dblclickCard(card, this);
     }
