@@ -159,7 +159,10 @@ moveTo : function(x, y, z) {
 resetAfterMove : function(obj) {
   obj = obj.card;
   obj.rect.updateFromNode(obj.node);
-  if (obj.destination) {
+  if (obj.tempDest) {
+    obj.node.style.zIndex = obj.tempDest[2];
+    obj.tempDest = null;
+  } else if (obj.destination) {
     obj.node.style.zIndex = obj.destination[2];
     obj.destination = null;
   }
@@ -180,23 +183,23 @@ animateMoveTo : function(x, y, z, duration) {
 },
 
 buildMoveEffect : function(dx, dy, z, baseOptions) {
-  var x = parseInt(this.node.style.left);
-  var y = parseInt(this.node.style.top);
-  var oldZ = this.getZ();
-  if (this.destination) {
-    x = this.destination[0];
-    y = this.destination[1];
-    this.resetAfterMove({ card: this });
-  }
+  var x;
+  var y;
+  var oldZ = this.node.style.zIndex;
+  if (z==null) z = oldZ;
   var options = Object.extend({}, baseOptions);
   options.beforeStart = function() {
     this.node.style.zIndex = oldZ+25;
   }.bind(this);
-  if (z==null) z = this.getZ();
-  this.destination = [
-    x+dx,
-    y+dy,
-    z ];
+  if (this.destination) {
+    x = this.destination[0];
+    y = this.destination[1];
+    this.tempDest = this.destination;
+  } else {
+    x = parseInt(this.node.style.left);
+    y = parseInt(this.node.style.top);
+  }
+  this.destination = [ x+dx, y+dy, z ];
   var effect = new Effect.MoveBy(this.node, dy, dx, options);
   effect.card = this;
   if (this.child!=null) {
@@ -264,7 +267,18 @@ makePlaceholder : function() { this.rankNode.className = 'cardplace'; },
 
 makeCardback : function() { this.rankNode.className = 'cardback'; },
 
-toString : function() { return 'Card: ' + this.rank + ' of ' + this.suit; }
+toString : function() {
+  var rank = this.rank.substring(1);
+  if (rank=='A')
+    rank = 'Ace';
+  else if (rank=='K')
+    rank = 'King';
+  else if (rank=='Q')
+    rank = 'Queen';
+  else if (rank=='J')
+    rank = 'Jack';
+  return rank == 'ardback' ? 'cardback' : 'Card: ' + rank + ' of ' + this.suit;
+}
 
 };
 
