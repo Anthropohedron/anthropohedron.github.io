@@ -1,9 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html><head>
+<meta charset="UTF-8">
 <title>Cards Dev</title>
 <link rel="stylesheet" type="text/css" href="cards.css">
 <link rel="stylesheet" type="text/css" href="smallcards.css">
 <link rel="stylesheet" type="text/css" href="largecards.css">
+<link rel="stylesheet" type="text/css" href="unicode.css">
 <!--[if lt IE 7]>
 <link rel="stylesheet" type="text/css" href="/pngHack/pngHack.css">
 <![endif]-->
@@ -60,7 +62,18 @@ Event.observe(window, 'load', function() {
 
   var chooseSize = function(size) {
     size = (""+size).toUpperCase();
-    document.body.className = size;
+    switch(size) {
+      case 'LARGE':
+        document.body.classList.remove('SMALL');
+        document.body.classList.add('LARGE');
+        $('largecards').checked = true;
+        break;
+      case 'SMALL':
+        document.body.classList.remove('LARGE');
+        document.body.classList.add('SMALL');
+        $('smallcards').checked = true;
+        break;
+    }
     if (game) game.reposition();
     var radio = $(size.toLowerCase()+'cards');
     if (radio) radio.checked = true;
@@ -69,6 +82,7 @@ Event.observe(window, 'load', function() {
 
   Event.observe('largecards', 'click', function() { chooseSize('LARGE'); });
   Event.observe('smallcards', 'click', function() { chooseSize('SMALL'); });
+  Event.observe('unicode', 'click', function() { document.body.classList.toggle('UNICODE', this.checked); });
   Event.observe('undo', 'click', function() { if (game) game.undo(); });
   Event.observe('redo', 'click', function() { if (game) game.redo(); });
 
@@ -90,7 +104,7 @@ Event.observe(window, 'load', function() {
 });
 
 </script>
-</head><body bgcolor="#CCCCCC" class="LARGE">
+</head><body bgcolor="#CCCCCC" class="LARGE UNICODE">
 
 <form action="#" method="get">
 <select id="gameSelect">
@@ -109,6 +123,8 @@ Event.observe(window, 'load', function() {
 value="LARGE" />large cards</label>
 <label for="smallcards"><input type="radio" name="cardSize" id="smallcards"
 value="SMALL" />small cards</label>
+<label for="unicode"><input type="checkbox" name="unicodeFaces" id="unicode"
+checked="checked" />Unicode cards</label>
 </form>
 <span id="dealing" style="color:red; visibility:hidden;">Dealing...</span>
 <div id="card_game_element"></div>

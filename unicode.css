@@ -1,0 +1,100 @@
+@charset "utf-8";
+.UNICODE .spades,.UNICODE .clubs {
+	color: black;
+}
+.UNICODE .hearts,.UNICODE .diamonds {
+	color: red;
+}
+
+.UNICODE table.cardLayout {
+	display: none;
+}
+.UNICODE .rank:before {
+	position: relative;
+}
+
+.UNICODE.LARGE .rank:before {
+	font-size: 188px;
+	top: -38px;
+	left: -13px;
+}
+@supports (-webkit-appearance:none) {
+.UNICODE.LARGE .rank:before {
+	top: -47px;
+}
+}
+.UNICODE.LARGE .surface {
+	top:-245px;
+}
+
+.UNICODE.SMALL .rank:before {
+	font-size: 94px;
+	top: -19px;
+	left: -6.5px;
+}
+@supports (-webkit-appearance:none) {
+.UNICODE.SMALL .rank:before {
+	top: -24px;
+}
+}
+.UNICODE.SMALL .surface {
+	top:-122px;
+}
+
+/******************************************************************************/
+
+.UNICODE   .spades  .rA:before { content: "🂡"; }
+.UNICODE   .spades  .r2:before { content: "🂢"; }
+.UNICODE   .spades  .r3:before { content: "🂣"; }
+.UNICODE   .spades  .r4:before { content: "🂤"; }
+.UNICODE   .spades  .r5:before { content: "🂥"; }
+.UNICODE   .spades  .r6:before { content: "🂦"; }
+.UNICODE   .spades  .r7:before { content: "🂧"; }
+.UNICODE   .spades  .r8:before { content: "🂨"; }
+.UNICODE   .spades  .r9:before { content: "🂩"; }
+.UNICODE   .spades .r10:before { content: "🂪"; }
+.UNICODE   .spades  .rJ:before { content: "🂫"; }
+.UNICODE   .spades  .rQ:before { content: "🂭"; }
+.UNICODE   .spades  .rK:before { content: "🂮"; }
+
+.UNICODE   .hearts  .rA:before { content: "🂱"; }
+.UNICODE   .hearts  .r2:before { content: "🂲"; }
+.UNICODE   .hearts  .r3:before { content: "🂳"; }
+.UNICODE   .hearts  .r4:before { content: "🂴"; }
+.UNICODE   .hearts  .r5:before { content: "🂵"; }
+.UNICODE   .hearts  .r6:before { content: "🂶"; }
+.UNICODE   .hearts  .r7:before { content: "🂷"; }
+.UNICODE   .hearts  .r8:before { content: "🂸"; }
+.UNICODE   .hearts  .r9:before { content: "🂹"; }
+.UNICODE   .hearts .r10:before { content: "🂺"; }
+.UNICODE   .hearts  .rJ:before { content: "🂻"; }
+.UNICODE   .hearts  .rQ:before { content: "🂽"; }
+.UNICODE   .hearts  .rK:before { content: "🂾"; }
+
+.UNICODE .diamonds  .rA:before { content: "🃁"; }
+.UNICODE .diamonds  .r2:before { content: "🃂"; }
+.UNICODE .diamonds  .r3:before { content: "🃃"; }
+.UNICODE .diamonds  .r4:before { content: "🃄"; }
+.UNICODE .diamonds  .r5:before { content: "🃅"; }
+.UNICODE .diamonds  .r6:before { content: "🃆"; }
+.UNICODE .diamonds  .r7:before { content: "🃇"; }
+.UNICODE .diamonds  .r8:before { content: "🃈"; }
+.UNICODE .diamonds  .r9:before { content: "🃉"; }
+.UNICODE .diamonds .r10:before { content: "🃊"; }
+.UNICODE .diamonds  .rJ:before { content: "🃋"; }
+.UNICODE .diamonds  .rQ:before { content: "🃍"; }
+.UNICODE .diamonds  .rK:before { content: "🃎"; }
+
+.UNICODE    .clubs  .rA:before { content: "🃑"; }
+.UNICODE    .clubs  .r2:before { content: "🃒"; }
+.UNICODE    .clubs  .r3:before { content: "🃓"; }
+.UNICODE    .clubs  .r4:before { content: "🃔"; }
+.UNICODE    .clubs  .r5:before { content: "🃕"; }
+.UNICODE    .clubs  .r6:before { content: "🃖"; }
+.UNICODE    .clubs  .r7:before { content: "🃗"; }
+.UNICODE    .clubs  .r8:before { content: "🃘"; }
+.UNICODE    .clubs  .r9:before { content: "🃙"; }
+.UNICODE    .clubs .r10:before { content: "🃚"; }
+.UNICODE    .clubs  .rJ:before { content: "🃛"; }
+.UNICODE    .clubs  .rQ:before { content: "🃝"; }
+.UNICODE    .clubs  .rK:before { content: "🃞"; }
