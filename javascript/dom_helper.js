@@ -113,8 +113,8 @@ createCardDOM: function(cardname, rank, suit, parent) {
   if (parent==null) {
     parent = document.body;
   }
-  var cardNode = this.newDiv(parent, suit);
-  var rankNode = this.newDiv(cardNode, rank);
+  var cardNode = this.newDiv(parent, 'suit ' + suit);
+  var rankNode = this.newDiv(cardNode, 'rank ' + rank);
   cardNode.id = 'card_' + cardname + '_suit';
   rankNode.id = 'card_' + cardname + '_rank';
   var cardTable = this.newTag(rankNode, 'table', 'cardLayout');

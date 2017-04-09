@@ -1,4 +1,4 @@
-.SMALL .spades, .SMALL .hearts, .SMALL .diamonds, .SMALL .clubs, .SMALL .notrump {
+.SMALL .suit {
 	width:53px;
 	height:73px;
 	border:1px solid gray;

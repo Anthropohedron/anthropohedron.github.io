@@ -210,18 +210,18 @@ buildMoveEffect : function(dx, dy, z, baseOptions) {
 changeTo : function(rank, suit) {
   this.rank = rank;
   this.suit = suit;
-  this.rankNode.className = rank;
-  this.node.className = suit;
+  this.rankNode.className = 'rank ' + rank;
+  this.node.className = 'suit ' + suit;
 },
 
 flipOver : function() {
   if (this.faceup) {
-    this.rankNode.className = 'cardback';
-    this.node.className = 'notrump';
+    this.rankNode.className = 'rank ' + 'cardback';
+    this.node.className = 'suit ' + 'notrump';
     this.faceup = false;
   } else {
-    this.rankNode.className = this.rank;
-    this.node.className = this.suit;
+    this.rankNode.className = 'rank ' + this.rank;
+    this.node.className = 'suit ' + this.suit;
     this.faceup = true;
   }
 },

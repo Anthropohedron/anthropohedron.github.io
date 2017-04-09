@@ -1,4 +1,4 @@
-.LARGE .spades, .LARGE .hearts, .LARGE .diamonds, .LARGE .clubs, .LARGE .notrump {
+.LARGE .suit {
 	width:106px;
 	height:146px;
 	border:2px solid gray;
