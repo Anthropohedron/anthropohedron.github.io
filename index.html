@@ -48,7 +48,7 @@ Event.observe(window, 'load', function() {
   });
 
   var dealing = document.getElementById("dealing");
-  var dealFunc = function() {
+  function dealFunc() {
     game.deal();
     dealing.style.visibility = "hidden";
   };
@@ -60,7 +60,7 @@ Event.observe(window, 'load', function() {
     }
   });
 
-  var chooseSize = function(size) {
+  function chooseSize(size) {
     size = (""+size).toUpperCase();
     switch(size) {
       case 'LARGE':
@@ -77,30 +77,25 @@ Event.observe(window, 'load', function() {
     if (game) game.reposition();
     var radio = $(size.toLowerCase()+'cards');
     if (radio) radio.checked = true;
-    document.cookie = "preferredSize="+size;
+    Cookies.set('size', size);
   };
+
+  function chooseUnicode(unicode) {
+    unicode = !!unicode;
+    document.body.classList.toggle('UNICODE', unicode);
+    $('unicode').checked = unicode;
+    Cookies.set('unicode', ''+unicode);
+  }
 
   Event.observe('largecards', 'click', function() { chooseSize('LARGE'); });
   Event.observe('smallcards', 'click', function() { chooseSize('SMALL'); });
-  Event.observe('unicode', 'click', function() { document.body.classList.toggle('UNICODE', this.checked); });
+  Event.observe('unicode', 'click', function() { chooseUnicode(this.checked); });
   Event.observe('undo', 'click', function() { if (game) game.undo(); });
   Event.observe('redo', 'click', function() { if (game) game.redo(); });
 
-  var getPreferredSize = function() {
-    var dc = document.cookie;
-    var prefix = "preferredSize=";
-    var begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
-      begin = dc.indexOf(prefix);
-      if (begin != 0) return "LARGE";
-    } else
-      begin += 2;
-    var end = document.cookie.indexOf(";", begin);
-    if (end == -1)
-      end = dc.length;
-    return unescape(dc.substring(begin + prefix.length, end));
-  };
-  chooseSize(getPreferredSize());
+  chooseUnicode(Cookies.get('unicode') != 'false');
+  chooseSize(Cookies.get('size') || 'LARGE');
+
 });
 
 </script>

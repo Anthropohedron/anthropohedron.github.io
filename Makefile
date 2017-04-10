@@ -19,8 +19,10 @@ CARDSCRIPTS=                     \
 	javascript/location.js   \
 	javascript/deck.js       \
 	javascript/rect.js
+LIB=                     \
+	lib/js.cookie.js 
 
-combined.js: $(SCRIPTACULOUS) $(CARDSCRIPTS)
+combined.js: $(LIB) $(SCRIPTACULOUS) $(CARDSCRIPTS)
 	cat $^ > $@
 
 clean:
