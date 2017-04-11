@@ -8,13 +8,14 @@ function seahaven(element, x, y) {
   this.x = (x==null) ? 0 : x;
   this.y = (y==null) ? 0 : y;
   this.deck = new CardDeck('seahaven', this.element);
-  this.aces = new Array();
   this.holes = new Array(4);
   this.stacks = new Array(10);
-  this.aces['spades'] = this.newLocation(this.x, this.y, 0, 0);
-  this.aces['hearts'] = this.newLocation(this.x, this.y, 0, 0);
-  this.aces['diamonds'] = this.newLocation(this.x, this.y, 0, 0);
-  this.aces['clubs'] = this.newLocation(this.x, this.y, 0, 0);
+  this.aces = {
+    spades:   this.newLocation(this.x, this.y, 0, 0),
+    hearts:   this.newLocation(this.x, this.y, 0, 0),
+    diamonds: this.newLocation(this.x, this.y, 0, 0),
+    clubs:    this.newLocation(this.x, this.y, 0, 0)
+  };
   for (i=0;i<4;++i) {
     this.holes[i] = this.newLocation(this.x, this.y, 0, 0);
   }
@@ -79,7 +80,7 @@ dblclickCard : function(card, dragger) {
 
 pickCard : function(card, dragger) {
              var retCard = null;
-             var loc = (card==null) ? null : card.location;
+             var loc = card && card.location;
              if ((loc==this.aces['spades']  ) ||
                  (loc==this.aces['hearts']  ) ||
                  (loc==this.aces['diamonds']) ||
