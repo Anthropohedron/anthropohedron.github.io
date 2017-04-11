@@ -1,55 +1,40 @@
+// Note: this file is all pure JS, no libraries (not even DOM)
+//
 // Stack class
 // -----------
 // This is a generalized stack class. Nothing particularly interesting
 // here, just a plain old stack.
 
-function Stack() {
-  this.clear();
-}
+function Stack() {}
 
-Stack.prototype = {
+Stack.prototype = []
 
-push : function(obj) {
-         this.list[this.stackSize++] = obj;
-       },
+Stack.prototype.top = function top() {
+  var len = this.length;
+  return len ? this[len-1] : undefined;
+};
 
-top : function() {
-        var obj = null;
-        if (this.stackSize>0) {
-          obj = this.list[this.stackSize-1];
-        }
-        return obj;
-      },
+Stack.prototype.clear = function clear() {
+  this.length = 0;
+};
 
-pop : function() {
-        var obj = null;
-        if (this.stackSize>0) {
-          obj = this.list[--this.stackSize];
-        }
-        return obj;
-      },
-
-clear : function() {
-          this.stackSize = 0;
-          this.list = [];
-        },
-
-size : function() { return this.stackSize; }
-
+Stack.prototype.size = function size() {
+  return this.length;
 };
 
 // LLQueue class
 // -----------
-// This is a queue class implemented with a linked list. Nothing
-// particularly interesting here, just a plain old queue.
+// This is a queue class implemented with a circular doubly-linked list.
+// Nothing particularly interesting here, just a plain old queue.
 
-function LLQueue() { }
+function LLQueue() {
+  this.next = this;
+  this.prev = this;
+}
 
 LLQueue.prototype = {
 
 value : null,
-next : null,
-prev : null,
 
 enq : function(val) {
         var node = { value : val, next : this.next, prev : this };
@@ -59,7 +44,7 @@ enq : function(val) {
 
 deq : function() {
         var node = this.prev;
-        if (node != this) {
+        if (node !== this) {
           this.prev = node.prev;
           this.prev.next = this;
           node.next = null;
@@ -69,13 +54,13 @@ deq : function() {
       },
 
 isEmpty : function() {
-            return (this.next == null);
+            return (this.next === this);
           },
 
 clear : function() {
           var cur = this;
           //avoid circular references
-          while (cur.next != null) {
+          while (cur.next !== null) {
             var next = cur.next;
             cur.next = null;
             cur.prev = null;

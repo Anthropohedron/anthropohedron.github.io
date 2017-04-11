@@ -32,18 +32,18 @@ CardLocation.prototype = {
     this.y = y;
     this.placeholder.moveTo(x, y);
     if (this.cardStack.size()>0)
-      this.cardStack.list[0].moveTo(this.x, this.y, 1);
+      this.cardStack[0].moveTo(this.x, this.y, 1);
   },
 
   setOffset: function(dx, dy) {
     this.dx = dx;
     this.dy = dy;
     if (this.cardStack.size()>1)
-      this.cardStack.list[0].reattach(dx, dy);
+      this.cardStack[0].reattach(dx, dy);
   },
 
   show: function(visible) {
-    var list = this.cardStack.list;
+    var list = this.cardStack;
     this.placeholder.show(visible);
     for (var i = 0; i<list.length; ++i) {
       list[i].show(visible);
