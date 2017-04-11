@@ -2,6 +2,8 @@
 // ---------------
 // This represents a rectangle in absolute document coordinates. Mostly
 // useful for intersection tests.
+//
+// Note: pure JS, no libraries (except DOM)
 
 Rectangle.prototype = {
 
