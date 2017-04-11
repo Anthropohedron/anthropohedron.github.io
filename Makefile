@@ -13,14 +13,15 @@ CARDSCRIPTS=                     \
 	javascript/dnd.js        \
 	javascript/cards.js      \
 	javascript/game.js       \
-	javascript/ajax.js       \
-	javascript/xmlrpc.js     \
-	javascript/netgame.js    \
 	javascript/location.js   \
 	javascript/deck.js       \
 	javascript/rect.js
 LIB=                     \
 	lib/js.cookie.js 
+NETWORKING=                   \
+	javascript/ajax.js    \
+	javascript/xmlrpc.js  \
+	javascript/netgame.js
 
 combined.js: $(LIB) $(SCRIPTACULOUS) $(CARDSCRIPTS)
 	cat $^ > $@
