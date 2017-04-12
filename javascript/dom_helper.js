@@ -37,8 +37,8 @@ stripPX: function(len) {
 
 };
 
-var CardDOM = Object.extend(new Object(), DOMhelper);
-Object.extend(CardDOM, {
+var CardDOM = $.extend({}, DOMhelper);
+$.extend(CardDOM, {
 
 /*
 pipsURL: (navigator.userAgent.toLowerCase().indexOf('msie')>=0) ?

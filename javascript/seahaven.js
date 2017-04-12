@@ -114,8 +114,8 @@ movedCard : function(evt, card, dragger) {
               var curCard;
               var i = 0;
               var cnum = card.number;
-              var evtX = Event.pointerX(evt);
-              var evtY = Event.pointerY(evt);
+              var evtX = evt.pageX;
+              var evtY = evt.pageY;
               this.newLoc = null;
               for (i=0;i<10;++i) {
                 curCard = this.stacks[i].top();
@@ -139,8 +139,7 @@ movedCard : function(evt, card, dragger) {
                 for (i=0;i<4;++i) {
                   if (this.holes[i].top()==null) {
                     curCard = this.holes[i].placeholder;
-                    highlight = curCard.contains(Event.pointerX(evt),
-                        Event.pointerY(evt));
+                    highlight = curCard.contains(evtX, evtY);
                     curCard.highlight(highlight);
                     if (highlight) {
                       this.newLoc = curCard.location;

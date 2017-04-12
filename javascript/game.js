@@ -13,7 +13,7 @@ function CardGame() {
 CardGame.prototype = {
 
   subclass: function(json) {
-    Object.extend(this, json);
+    $.extend(this, json);
     return this;
   },
 
@@ -49,7 +49,7 @@ CardGame.prototype = {
   },
 
   constructMe: function(element) {
-    this.element = $(element);
+    this.element = $(element)[0];
     this.dragger = new CardDragger(this);
     this.dragger.observeElement(this.element);
   },

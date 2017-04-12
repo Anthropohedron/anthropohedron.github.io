@@ -4,8 +4,6 @@
 // representation, its state, its location, etc. There are also a bunch of
 // standalone functions and variables related to it.
 
-Effect.Queues.get('cardscope');
-
 function Card(cardname, number, parent, faceup) {
   var nodes = CardDOM.createCardDOM(cardname, 'cardback', 'notrump', parent);
   this.name = cardname;
@@ -26,11 +24,15 @@ function Card(cardname, number, parent, faceup) {
   this.childDY = Card.childDY;
   this.parent = null;
   if (faceup) flipOver();
+  this.resetAfterMove = this.resetAfterMove.bind(this);
+  this.raiseForAnimation = this.raiseForAnimation.bind(this);
   Card.allcards[''+cardname] = this;
 }
 
-Object.extend(Card, {
+$.extend(Card, {
 
+queue: new LLQueue(),
+running: false,
 childDX: 4,
 childDY: 50,
 allcards: [],
@@ -38,6 +40,25 @@ cardRegex: new RegExp('^card_(.*)_(suit|rank|surf)$'),
 ranklist : [ 'rA', 'r2', 'r3', 'r4', 'r5', 'r6',
      'r7', 'r8', 'r9', 'r10', 'rJ', 'rQ', 'rK' ],
 suitlist : [ 'spades', 'hearts', 'diamonds', 'clubs' ],
+
+runQueue: function runQueue() {
+  var func = this.queue.deq();
+  if (func) {
+    this.running = true;
+    func();
+  } else {
+    this.running = false;
+  }
+},
+
+enq: function(func) {
+  if (!this.running && Card.queue.isEmpty()) {
+    this.running = true;
+    setTimeout(func, 0);
+  } else {
+    this.queue.enq(func);
+  }
+},
 
 getCardByName: function(cardname) {
   return this.allcards[''+cardname];
@@ -49,7 +70,7 @@ getCardByID: function(cardID) {
 },
 
 findParentCard: function(obj) {
-  obj = $(obj);
+  obj = $(obj)[0];
   while (obj) {
     var matches = this.cardRegex.exec(obj.id);
     if (matches!=null) {
@@ -62,6 +83,7 @@ findParentCard: function(obj) {
 }
 
 });
+
 
 Card.prototype = {
 
@@ -144,7 +166,7 @@ reattach : function(dx, dy) {
 moveTo : function(x, y, z) {
   this.node.style.left = '' + x + 'px';
   this.node.style.top  = '' + y + 'px';
-  this.resetAfterMove({ card: this });
+  this.resetAfterMove();
   if (z==null) {
     z = this.getZ() + 1;
   } else {
@@ -156,16 +178,20 @@ moveTo : function(x, y, z) {
   }
 },
 
-resetAfterMove : function(obj) {
-  obj = obj.card;
-  obj.rect.updateFromNode(obj.node);
-  if (obj.tempDest) {
-    obj.node.style.zIndex = obj.tempDest[2];
-    obj.tempDest = null;
-  } else if (obj.destination) {
-    obj.node.style.zIndex = obj.destination[2];
-    obj.destination = null;
+resetAfterMove : function() {
+  this.rect.updateFromNode(this.node);
+  if (this.tempDest) {
+    this.node.style.zIndex = this.tempDest[2];
+    this.tempDest = null;
+  } else if (this.destination) {
+    this.node.style.zIndex = this.destination[2];
+    this.destination = null;
   }
+  Card.runQueue();
+},
+
+raiseForAnimation : function() {
+  this.node.style.zIndex = Number.MAX_SAFE_INTEGER;
 },
 
 animateMoveTo : function(x, y, z, duration) {
@@ -174,11 +200,12 @@ animateMoveTo : function(x, y, z, duration) {
   var dy = y - (this.destination ?
       this.destination[1] : parseInt(this.node.style.top));
   if (!duration) duration = 0.25;
-  var options = { queue: { position: "end", scope: "cardscope" },
-    duration: duration,
-    fps: 60,
-    transition: Effect.Transitions.sinoidal,
-    afterFinish: this.resetAfterMove };
+  var options = {
+    duration: duration * 1000,
+    easing: 'linear',
+    start: this.raiseForAnimation,
+    always: this.resetAfterMove
+  };
   this.buildMoveEffect(dx, dy, z, options);
 },
 
@@ -187,10 +214,7 @@ buildMoveEffect : function(dx, dy, z, baseOptions) {
   var y;
   var oldZ = this.node.style.zIndex;
   if (z==null) z = oldZ;
-  var options = Object.extend({}, baseOptions);
-  options.beforeStart = function() {
-    this.node.style.zIndex = oldZ+25;
-  }.bind(this);
+  var options = $.extend({}, baseOptions);
   if (this.destination) {
     x = this.destination[0];
     y = this.destination[1];
@@ -200,40 +224,38 @@ buildMoveEffect : function(dx, dy, z, baseOptions) {
     y = parseInt(this.node.style.top);
   }
   this.destination = [ x+dx, y+dy, z ];
-  var effect = new Effect.MoveBy(this.node, dy, dx, options);
-  effect.card = this;
+  var props = {
+    left: this.destination[0],
+    top: this.destination[1],
+  };
+  var node = this.node;
+  Card.enq(function() { $(node).animate(props, options); });
   if (this.child!=null) {
     this.child.buildMoveEffect(dx, dy, z+1, baseOptions);
   }
 },
 
 changeTo : function(rank, suit) {
+  $(this.rankNode).removeClass(this.rank).addClass(rank);
+  $(this.node).removeClass(this.suit).addClass(suit);
   this.rank = rank;
   this.suit = suit;
-  this.rankNode.className = 'rank ' + rank;
-  this.node.className = 'suit ' + suit;
 },
 
 flipOver : function() {
-  if (this.faceup) {
-    this.rankNode.className = 'rank ' + 'cardback';
-    this.node.className = 'suit ' + 'notrump';
-    this.faceup = false;
-  } else {
-    this.rankNode.className = 'rank ' + this.rank;
-    this.node.className = 'suit ' + this.suit;
-    this.faceup = true;
-  }
+  //TODO: flip animation?
+  var prev = this.faceup;
+  this.faceup = !this.faceup;
+  $(this.rankNode).toggleClass('cardback', prev)
+    .toggleClass(this.rank, this.faceup)
+  $(this.node).toggleClass('notrump', prev)
+    .toggleClass(this.suit, this.faceup)
 },
 
 setFaceUp : function(faceup) { if (faceup!=this.faceup) this.flipOver(); },
 
 highlight : function(lit) {
-  if (lit) {
-    Element.addClassName(this.node, 'highlight');
-  } else {
-    Element.removeClassName(this.node, 'highlight');
-  }
+  $(this.node).toggleClass('highlight', !!lit);
 },
 
 isRed : function() {

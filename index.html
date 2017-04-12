@@ -10,6 +10,8 @@
 <link rel="stylesheet" type="text/css" href="/pngHack/pngHack.css">
 <![endif]-->
 <script language="javascript" type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script language="javascript" type="text/javascript"
 	src="combined.js"></script>
 <script language="javascript" type="text/javascript"
 	src="javascript/seahaven.js"></script>
@@ -17,34 +19,30 @@
 	src="javascript/klondike.js"></script>
 <script language="javascript" type="text/javascript">
 
-
-Event.observe(window, 'load', function() {
+$(document).ready(function() {
   var game = null;
+  var games = {};
 
-  var gameSelect = $('gameSelect');
-  var rulesLink = $('rulesLink');
+  var rulesLink = $('#rulesLink');
+  var gameSelect = $('#gameSelect');
 
-  Event.observe(gameSelect, 'change', function() {
-    var options = gameSelect.options;
-    var option = options[gameSelect.selectedIndex];
+  gameSelect.bind('change', function() {
+    var option = gameSelect.val();
     var newGame = null;
-    if (option.value == "none") return;
-    if (option.game) {
-      newGame = option.game
+    if (option == "none") return;
+    if (games.hasOwnProperty(option)) {
+      newGame = games[option];
     } else {
-      newGame = eval('new '+option.value+'("card_game_element", 10, 110);');
-      option.game = newGame;
+      newGame = eval('new '+option+'("#card_game_element", 10, 110);');
+      games[option] = newGame;
     }
-    if (options[0].value=="none") {
-      options[0] = null;
-    }
-    if (game!=newGame) {
+    if (game != newGame) {
       if (game) game.deactivate();
       game = newGame;
       game.activate();
-      rulesLink.hash = option.value;
+      rulesLink.hash = option;
     }
-    return;
+    return true;
   });
 
   var dealing = document.getElementById("dealing");
@@ -53,7 +51,7 @@ Event.observe(window, 'load', function() {
     dealing.style.visibility = "hidden";
   };
 
-  Event.observe('deal', 'click', function() {
+  $('#deal').bind('click', function() {
     if (game) {
       dealing.style.visibility = "visible";
       setTimeout(dealFunc, 100);
@@ -87,11 +85,11 @@ Event.observe(window, 'load', function() {
     Cookies.set('unicode', ''+unicode);
   }
 
-  Event.observe('largecards', 'click', function() { chooseSize('LARGE'); });
-  Event.observe('smallcards', 'click', function() { chooseSize('SMALL'); });
-  Event.observe('unicode', 'click', function() { chooseUnicode(this.checked); });
-  Event.observe('undo', 'click', function() { if (game) game.undo(); });
-  Event.observe('redo', 'click', function() { if (game) game.redo(); });
+  $('#largecards').bind('click', function() { chooseSize('LARGE'); });
+  $('#smallcards').bind('click', function() { chooseSize('SMALL'); });
+  $('#unicode').bind('click', function() { chooseUnicode(this.checked); });
+  $('#undo').bind('click', function() { if (game) game.undo(); });
+  $('#redo').bind('click', function() { if (game) game.redo(); });
 
   chooseUnicode(Cookies.get('unicode') != 'false');
   chooseSize(Cookies.get('size') || 'LARGE');

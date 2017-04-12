@@ -1,11 +1,3 @@
-SCRIPTACULOUS=                         \
-	scriptaculous/prototype.js     \
-	scriptaculous/effects.js       \
-	scriptaculous/builder.js       \
-	scriptaculous/controls.js      \
-	scriptaculous/dragdrop.js      \
-	scriptaculous/scriptaculous.js \
-	scriptaculous/slider.js
 CARDSCRIPTS=                     \
 	javascript/dom_helper.js \
 	javascript/stack.js      \
@@ -23,7 +15,7 @@ NETWORKING=                   \
 	javascript/xmlrpc.js  \
 	javascript/netgame.js
 
-combined.js: $(LIB) $(SCRIPTACULOUS) $(CARDSCRIPTS)
+combined.js: $(LIB) $(CARDSCRIPTS)
 	cat $^ > $@
 
 clean:

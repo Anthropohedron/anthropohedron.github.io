@@ -4,18 +4,21 @@
 // Most of the methods of the Stack class are exposed, directly or
 // indirectly. Also, the topmost card can be highlighted.
 
-function CardLocation(x, y, dx, dy, element) {
-  this.x = x;
-  this.y = y;
-  this.dx = dx;
-  this.dy = dy;
-  this.cardStack = new Stack();
-  this.placeholder = new Card('location', -1, element, false);
-  this.placeholder.makePlaceholder();
-  this.placeholder.moveTo(x,y,0);
-  this.placeholder.location = this;
-  this.placeholder.show(false);
-}
+CardLocation = (function() {
+  var loc_index = 0;
+  return function CardLocation(x, y, dx, dy, element) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.cardStack = new Stack();
+    this.placeholder = new Card('location' + loc_index++, -1, element, false);
+    this.placeholder.makePlaceholder();
+    this.placeholder.moveTo(x,y,0);
+    this.placeholder.location = this;
+    this.placeholder.show(false);
+  }
+}());
 
 CardLocation.prototype = {
 

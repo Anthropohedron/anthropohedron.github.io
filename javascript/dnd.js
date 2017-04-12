@@ -5,16 +5,13 @@
 
 function CardDragger(game) {
   this.game = game;
-  var self = this;
-  this.handlers = [
-      [ this.mouseDown, 'mousedown' ],
-      [ this.mouseMove, 'mousemove' ],
-      [ this.mouseUp, 'mouseup' ],
-      [ this.click, 'click' ],
-      [ this.dblClick, 'dblclick' ]
-    ];
-  this.handlers.each(function(fn)
-      { fn[0] = fn[0].bindAsEventListener(self); });
+  this.handlers = {
+    mousedown: this.mouseDown.bind(this),
+    mousemove: this.mouseMove.bind(this),
+    mouseup: this.mouseUp.bind(this),
+    click: this.click.bind(this),
+    dblclick: this.dblClick.bind(this)
+  };
 }
 
 CardDragger.prototype = {
@@ -25,18 +22,17 @@ CardDragger.prototype = {
   oldZ: 0,
 
   observeElement: function(element) {
-    this.handlers.each(function(h) { Event.observe(element, h[1], h[0]); });
-    element = null;
+    $(element).on(this.handlers);
   },
 
   isAnimating: function() {
-    var queue = Effect.Queues.get('cardscope');
-    return queue.effects.detect(function(e) { return e.state != 'finished'; });
+    return Card.running;
   },
 
   mouseDown: function(evt) {
-    var element = Event.element(evt);
-    Event.stop(evt);
+    var element = evt.target;
+    evt.preventDefault();
+    evt.stopPropagation();
     if (this.isAnimating()) return;
     if (element) {
       var dragCard =
@@ -44,8 +40,8 @@ CardDragger.prototype = {
       this.dragCard = dragCard;
       if (dragCard!=null) {
         dragCard.highlight(false);
-        this.cX = Event.pointerX(evt) - dragCard.rect.left;
-        this.cY = Event.pointerY(evt) - dragCard.rect.top;
+        this.cX = evt.pageX - dragCard.rect.left;
+        this.cY = evt.pageY - dragCard.rect.top;
         this.oldZ = dragCard.getZ();
         dragCard.setZ(this.oldZ + 150);
         //return true;
@@ -58,10 +54,11 @@ CardDragger.prototype = {
   },
 
   mouseMove: function(evt) {
-    Event.stop(evt);
+    evt.preventDefault();
+    evt.stopPropagation();
     if (this.isAnimating()) return;
     if (this.dragCard!=null) {
-      this.dragCard.moveTo(Event.pointerX(evt) - this.cX, Event.pointerY(evt) - this.cY);
+      this.dragCard.moveTo(evt.pageX - this.cX, evt.pageY - this.cY);
       this.game.movedCard(evt, this.dragCard, this);
       //return true;
     }
@@ -69,7 +66,8 @@ CardDragger.prototype = {
   },
 
   mouseUp: function(evt) {
-    Event.stop(evt);
+    evt.preventDefault();
+    evt.stopPropagation();
     if (this.isAnimating()) return;
     if (this.dragCard!=null) {
       var card = this.dragCard;
@@ -83,8 +81,9 @@ CardDragger.prototype = {
   },
 
   click: function(evt) {
-    var element = Event.element(evt);
-    Event.stop(evt);
+    var element = evt.target;
+    evt.preventDefault();
+    evt.stopPropagation();
     if (this.isAnimating()) return;
     var card = Card.findParentCard(element);
     if (card!=null) {
@@ -94,8 +93,9 @@ CardDragger.prototype = {
   },
 
   dblClick: function(evt) {
-    var element = Event.element(evt);
-    Event.stop(evt);
+    var element = evt.target;
+    evt.preventDefault();
+    evt.stopPropagation();
     if (this.isAnimating()) return;
     var card = Card.findParentCard(element);
     if (card!=null) {
