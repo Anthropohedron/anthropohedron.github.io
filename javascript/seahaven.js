@@ -22,6 +22,7 @@ function seahaven(element, x, y) {
   for (i=0;i<10;++i) {
     this.stacks[i] = this.newLocation(this.x, this.y, 0, 0);
   }
+  this.putUpCards = this.putUpCards.bind(this);
   this.reposition();
 }
 
@@ -174,7 +175,8 @@ dropCard : function(evt, card, dragger) {
                  action = this.allowCardMove(card);
                }
                if (action!=null) {
-                 this.putUpCards(action);
+                 var putUpCards = this.putUpCards;
+                 Card.enq(function() { putUpCards(action) });
                }
              }
              this.oldLoc = null;
@@ -206,7 +208,11 @@ putUpCards : function(action) {
                  for (i=0;i<4;++i) {
                    nextAction = this.testPutUpCard(this.holes[i].top());
                    if (nextAction!=null) {
-                     action.addToChain(nextAction);
+                     if (action) {
+                       action.addToChain(nextAction);
+                     } else {
+                       action = nextAction;
+                     }
                      nextAction.redo();
                      worthTrying = true;
                    }
@@ -214,12 +220,17 @@ putUpCards : function(action) {
                  for (i=0;i<10;++i) {
                    nextAction = this.testPutUpCard(this.stacks[i].top());
                    if (nextAction!=null) {
-                     action.addToChain(nextAction);
+                     if (action) {
+                       action.addToChain(nextAction);
+                     } else {
+                       action = nextAction;
+                     }
                      nextAction.redo();
                      worthTrying = true;
                    }
                  }
                }
+               Card.runQueue();
              },
 
 deal : function() {
@@ -237,7 +248,7 @@ deal : function() {
          }
          this.deck.dealTo(this.holes[1], true);
          this.deck.dealTo(this.holes[2], true);
-         this.putUpCards(new CardAction(this.holes[0], this.holes[3]));
+         this.putUpCards();
        }
 
 });
